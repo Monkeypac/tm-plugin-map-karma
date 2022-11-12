@@ -1,4 +1,4 @@
-Map g_map;
+Map@ g_map;
 Karma::Round@ g_karma;
 bool g_show_karma;
 
@@ -25,18 +25,18 @@ void UpdateMap() {
     auto map = GetApp().RootMap;
 
     if (map is null) {
-	if (g_map.m_ctn !is null) {
-	    g_map.Unset();
+	if (@g_map !is null) {
+	    @g_map = null;
 	    OnMapUnset();
 	}
     } else {
 	Map new_map = GetMapInfo(map);
-	if (g_map.m_ctn is null) {
-	    g_map.Set(map, new_map);
+	if (g_map is null) {
+	    @g_map = new_map;
 	    OnMapSet();
 	} else {
 	    if (new_map.m_id != g_map.m_id) {
-		g_map.Set(map, new_map);
+		@g_map = new_map;
 		OnMapSet();
 	    }
 	}
