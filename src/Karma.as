@@ -27,6 +27,8 @@ namespace Karma {
 		return;
 	    }
 
+	    log_trace("Adding vote: UID: " + user_id + " Msg: " + input + " Nickname: " + input_nickname + " Source: " + source);
+
 	    string old_input;
 	    if (m_votes.Get(user_id, old_input)) {
 		VoteValue old_value = GetVoteValueFromString(old_input);
