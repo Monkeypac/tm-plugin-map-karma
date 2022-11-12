@@ -2,6 +2,7 @@ namespace Karma {
     class Round {
 	dictionary m_votes;
 	dictionary m_nicknames;
+	array<string> m_last_votes;
 	int m_sum_votes;
 	Map m_map;
 	bool m_is_on;
@@ -46,6 +47,7 @@ namespace Karma {
 		nickname = nickname + " (" + source + ")";
 	    }
 	    m_nicknames.Set(user_id, nickname);
+	    m_last_votes.InsertLast(GetIconFromString(input) + nickname);
 	}
 
 	void Load() {
@@ -106,10 +108,6 @@ namespace Karma {
 	    return 0;
 	}
 
-	string String() {
-	    return "MapKarma: " + this.GetScore();
-	}
-
 	void RenderInterfaceVoteEntries() {
 	    if (!this.m_is_on) {
 		return;
@@ -124,8 +122,33 @@ namespace Karma {
 		string user_nickname = string(this.m_nicknames[user_id]);
 		string vote = string(this.m_votes[user_id]);
 
-		UI::Text(GetIconFromString(vote) + user_nickname);
+		UI::Text(GetIconFromString(vote) + " " + user_nickname);
 	    }
+	}
+
+	void RenderShowKarma() {
+	    nvg::BeginPath();
+	    nvg::FontSize(30);
+
+	    string karmaValue = "MapKarma: " + this.GetScore();;
+
+	    nvg::Text(vec2(20, 50), karmaValue);
+	    nvg::ClosePath();
+	}
+
+	void RenderShowLastVote() {
+	    if (m_last_votes.Length == 0) {
+		return;
+	    }
+
+	    nvg::BeginPath();
+	    nvg::FontSize(15);
+
+	    string last_vote = m_last_votes[m_last_votes.Length - 1];
+
+	    nvg::TextAlign(nvg::Align::Left);
+	    nvg::TextBox(vec2(20, 100), 300, last_vote);
+	    nvg::ClosePath();
 	}
     }
 
@@ -160,11 +183,11 @@ namespace Karma {
 	    case MinusMinus:
 	    return Icons::MinusCircle + Icons::MinusCircle;
 	    case Minus:
-	    return Icons::ChevronRight + Icons::MinusCircle;
+	    return Icons::MinusCircle;
 	    case MinusPlus:
 	    return Icons::MinusCircle + Icons::PlusCircle;
 	    case Plus:
-	    return Icons::ChevronRight + Icons::PlusCircle;
+	    return Icons::PlusCircle;
 	    case PlusPlus:
 	    return Icons::PlusCircle + Icons::PlusCircle;
 	}

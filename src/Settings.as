@@ -2,6 +2,9 @@
 bool Setting_ShowKarma = true;
 
 [Setting hidden]
+bool Setting_ShowLastVote = true;
+
+[Setting hidden]
 bool Setting_VoteEntriesItf = false;
 
 [Setting category="Advanced" name="Whether to send a message when votes are available for a map"]

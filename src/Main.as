@@ -70,17 +70,12 @@ void OnDisabled() {
 }
 
 void Render() {
-    if (Setting_ShowKarma) {
-	nvg::BeginPath();
-	nvg::FontSize(30);
+    if (Setting_ShowKarma && g_karma !is null) {
+	g_karma.RenderShowKarma();
+    }
 
-	string karmaValue = "N/A";
-	if (g_karma !is null) {
-	    karmaValue = g_karma.String();
-	}
-
-	nvg::Text(vec2(20, 50), karmaValue);
-	nvg::ClosePath();
+    if (Setting_ShowLastVote && g_karma !is null) {
+	g_karma.RenderShowLastVote();
     }
 }
 
