@@ -42,7 +42,7 @@ namespace TwitchMod {
     }
 
     void OnDisabled() {
-	print("Disabling Twitch functionnalities");
+	log_trace("Disabling Twitch functionnalities");
 	if (n_pluginId > 0) Twitch::Unregister(n_pluginId);
 	n_pluginId = 0;
     }

@@ -5,10 +5,10 @@ bool g_show_karma;
 void Main() {
 #if TMNEXT
 #if DEPENDENCY_TWITCHBASE
-    print("Twitch base installed, will attempt to use Twitch functionnalities.");
+    log_info("Twitch base installed, will attempt to use Twitch functionnalities.");
     startnew(TwitchMod::Main);
 #else
-    print("Twitch base not installed, please install and configure to be able to use Twitch functionnalities.");
+    log_info("Twitch base not installed, please install and configure to be able to use Twitch functionnalities.");
 #endif
 
     startnew(InGame::Main);
@@ -60,7 +60,7 @@ void OnMapUnset() {
 }
 
 void OnDisabled() {
-    print("Disabling MapKarma plugin");
+    log_trace("Disabling MapKarma plugin");
     TwitchMod::OnDisabled();
 }
 

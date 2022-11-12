@@ -10,7 +10,7 @@ Map GetMapInfo(CGameCtnChallenge @map) {
     output.m_name = map.MapName;
 
     if (map.MapInfo is null) {
-	print("warning: map info undefined");
+	log_warn("warning: map info undefined");
     } else {
 	output.m_id = map.MapInfo.MapUid;
     }
