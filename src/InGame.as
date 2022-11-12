@@ -125,7 +125,7 @@ namespace InGame {
 
 	// Count vote
 	if (@g_karma !is null) {
-	    g_karma.AddVote(authorId, text);
+	    g_karma.AddVote(authorId, text, authorName, "Trackmania");
 	}
     }
 

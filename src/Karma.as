@@ -1,6 +1,7 @@
 namespace Karma {
     class Round {
 	dictionary m_votes;
+	dictionary m_nicknames;
 	int m_sum_votes;
 	Map m_map;
 	bool m_is_on;
@@ -12,15 +13,15 @@ namespace Karma {
 	    this.Load();
 	}
 
-	void AddVote(const string &in user_id, const string &in input) {
+	void AddVote(const string &in user_id, const string &in input, const string &in input_nickname = "", const string &in source = "") {
 	    if (!this.m_is_on) {
 		return;
 	    }
 
-	    addVote(user_id, input);
+	    addVote(user_id, input, input_nickname, source);
 	}
 
-	void addVote(const string &in user_id, const string &in input) {
+	void addVote(const string &in user_id, const string &in input, const string &in input_nickname, const string &in source) {
 	    VoteValue value = GetVoteValueFromString(input);
 	    if (value == VoteValue::Undefined) {
 		return;
@@ -34,6 +35,15 @@ namespace Karma {
 	    m_sum_votes += value;
 
 	    m_votes.Set(user_id, input);
+
+	    string nickname = input_nickname;
+	    if (nickname == "") {
+		nickname = user_id;
+	    }
+	    if (source != "") {
+		nickname = nickname + " (" + source + ")";
+	    }
+	    m_nicknames.Set(user_id, nickname);
 	}
 
 	void Load() {
@@ -42,9 +52,9 @@ namespace Karma {
 	}
 
 	void loadLocal() {
-	    string saveFileURI = IO::FromStorageFolder(this.m_map.m_id);
+	    string saveFileURI = IO::FromStorageFolder(g_plugin.get_Version() + this.m_map.m_id);
 	    if (!IO::FileExists(saveFileURI)) {
-		log_trace("No savefile for map " + this.m_map.m_name + " / " + this.m_map.m_id);
+		log_trace("No savefile for map " + this.m_map.m_name + " / " + this.m_map.m_id + " (version " + g_plugin.get_Version() + ")");
 		return;
 	    }
 
@@ -54,9 +64,10 @@ namespace Karma {
 	    file.SetPos(0);
 	    while (!file.EOF()) {
 		string user_id = file.ReadLine();
+		string user_nickname = file.ReadLine();
 		string vote = file.ReadLine();
-		log_trace("Loaded " + user_id + " : " + vote);
-		addVote(user_id, vote);
+		log_trace("Loaded " + user_id + "(" + user_nickname + ")" + " : " + vote);
+		addVote(user_id, vote, user_nickname, "");
 	    }
 	    file.Close();
 	}
@@ -67,16 +78,18 @@ namespace Karma {
 	}
 
 	void saveLocal() {
-	    string saveFileURI = IO::FromStorageFolder(this.m_map.m_id);
+	    string saveFileURI = IO::FromStorageFolder(g_plugin.get_Version() + this.m_map.m_id);
 	    IO::File file(saveFileURI);
 	    file.Open(IO::FileMode::Write);
 	    log_trace("Saving map karma " + this.m_map.m_name + " / " + this.m_map.m_id);
 	    string[]@ keys = this.m_votes.GetKeys();
 	    for (uint i = 0; i < keys.Length; i++) {
 		string user_id = keys[i];
+		string user_nickname = string(this.m_nicknames[user_id]);
 		string vote = string(this.m_votes[user_id]);
-		log_trace("Saving vote " + user_id + " : " + vote);
+		log_trace("Saving vote " + user_id + "(" + user_nickname + ")" + " : " + vote);
 		file.WriteLine(user_id);
+		file.WriteLine(user_nickname);
 		file.WriteLine(vote);
 	    }
 	    file.Flush();
@@ -106,9 +119,10 @@ namespace Karma {
 
 	    for (uint i = 0; i < keys.Length; i++) {
 		string user_id = keys[i];
+		string user_nickname = string(this.m_nicknames[user_id]);
 		string vote = string(this.m_votes[user_id]);
 
-		UI::Text(GetIconFromString(vote) + user_id);
+		UI::Text(GetIconFromString(vote) + user_nickname);
 	    }
 	}
     }

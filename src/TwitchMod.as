@@ -28,7 +28,7 @@ namespace TwitchMod {
 
     void onMessage(Twitch::Message@ message) {
 	if (@g_karma !is null) {
-	    g_karma.AddVote(message.m_username, message.m_text);
+	    g_karma.AddVote(message.m_username, message.m_text, message.m_username, "Twitch");
 	}
     }
 

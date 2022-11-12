@@ -1,7 +1,9 @@
 Map@ g_map;
 Karma::Round@ g_karma;
+Meta::Plugin@ g_plugin;
 
 void Main() {
+    @g_plugin = Meta::ExecutingPlugin();
 #if TMNEXT
 #if DEPENDENCY_TWITCHBASE
     log_info("Twitch base installed, will attempt to use Twitch functionnalities.");
