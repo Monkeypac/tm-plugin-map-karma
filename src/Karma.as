@@ -94,6 +94,23 @@ namespace Karma {
 	string String() {
 	    return "MapKarma: " + this.GetScore();
 	}
+
+	void RenderInterfaceVoteEntries() {
+	    if (!this.m_is_on) {
+		return;
+	    }
+
+	    string[]@ keys = this.m_votes.GetKeys();
+
+	    UI::Text(Icons::Users + keys.Length + Icons::Star + this.GetScore());
+
+	    for (uint i = 0; i < keys.Length; i++) {
+		string user_id = keys[i];
+		string vote = string(this.m_votes[user_id]);
+
+		UI::Text(GetIconFromString(vote) + user_id);
+	    }
+	}
     }
 
     enum VoteValue {
@@ -119,5 +136,23 @@ namespace Karma {
 	}
 
 	return VoteValue::Undefined;
+    }
+
+    string GetIconFromString(const string &in input) {
+	VoteValue value = GetVoteValueFromString(input);
+	switch (value) {
+	    case MinusMinus:
+	    return Icons::MinusCircle + Icons::MinusCircle;
+	    case Minus:
+	    return Icons::ChevronRight + Icons::MinusCircle;
+	    case MinusPlus:
+	    return Icons::MinusCircle + Icons::PlusCircle;
+	    case Plus:
+	    return Icons::ChevronRight + Icons::PlusCircle;
+	    case PlusPlus:
+	    return Icons::PlusCircle + Icons::PlusCircle;
+	}
+
+	return Icons::TimesCircle + Icons::TimesCircle;
     }
 }

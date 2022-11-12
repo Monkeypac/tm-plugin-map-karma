@@ -78,9 +78,30 @@ void Render() {
     }
 }
 
+void RenderInterface() {
+    if (g_karma !is null) {
+	if (Setting_VoteEntriesItf) {
+	    if (UI::Begin("MapKarma votes")) {
+		g_karma.RenderInterfaceVoteEntries();
+		UI::End();
+	    }
+	}
+    }
+}
+
 void RenderMenu()
 {
-    if (UI::MenuItem("Show MapKarma", "", Setting_ShowKarma)) {
-	Setting_ShowKarma = !Setting_ShowKarma;
+    if (UI::BeginMenu("Game interface")) {
+	if (UI::MenuItem("Show MapKarma", "", Setting_ShowKarma)) {
+	    Setting_ShowKarma = !Setting_ShowKarma;
+	}
+	UI::EndMenu();
+    }
+
+    if (UI::BeginMenu("Openplanet interface")) {
+	if (UI::MenuItem("Show votes", "", Setting_VoteEntriesItf)) {
+	    Setting_VoteEntriesItf = !Setting_VoteEntriesItf;
+	}
+	UI::EndMenu();
     }
 }
