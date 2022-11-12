@@ -81,5 +81,7 @@ void Render() {
 
 void RenderMenu()
 {
-    g_show_karma = UI::MenuItem("Show MapKarma");
+    if (UI::MenuItem("Show MapKarma", "", g_show_karma)) {
+	g_show_karma = !g_show_karma;
+    }
 }
