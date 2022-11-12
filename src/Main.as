@@ -1,6 +1,5 @@
 Map@ g_map;
 Karma::Round@ g_karma;
-bool g_show_karma;
 
 void Main() {
 #if TMNEXT
@@ -65,7 +64,7 @@ void OnDisabled() {
 }
 
 void Render() {
-    if (g_show_karma) {
+    if (Setting_ShowKarma) {
 	nvg::BeginPath();
 	nvg::FontSize(30);
 
@@ -81,7 +80,7 @@ void Render() {
 
 void RenderMenu()
 {
-    if (UI::MenuItem("Show MapKarma", "", g_show_karma)) {
-	g_show_karma = !g_show_karma;
+    if (UI::MenuItem("Show MapKarma", "", Setting_ShowKarma)) {
+	Setting_ShowKarma = !Setting_ShowKarma;
     }
 }
