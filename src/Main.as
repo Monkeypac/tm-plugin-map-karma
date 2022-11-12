@@ -51,6 +51,10 @@ void OnMapSet() {
 
     Karma::Round new_karma = Karma::Round(g_map);
     @g_karma = @new_karma;
+
+#if DEPENDENCY_TWITCHBASE
+    if (Setting_SendTwitchMessageOnMapChange) TwitchMod::SendMessage(Setting_TwitchMessageOnMapChange + " " + g_map.m_name);
+#endif
 }
 
 void OnMapUnset() {

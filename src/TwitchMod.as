@@ -26,6 +26,15 @@ namespace TwitchMod {
 	}
     }
 
+    void SendMessage(const string &in msg) {
+	if (n_pluginId == 0) {
+	    log_warn("Twitch plugin not loaded yet, won't send message");
+	    return;
+	}
+	log_trace("Trying to send message to twitch channel " + n_currentChannel + " ==> " + msg);
+	Twitch::SendMessage(n_currentChannel, msg);
+    }
+
     void onMessage(Twitch::Message@ message) {
 	if (@g_karma !is null) {
 	    g_karma.AddVote(message.m_username, message.m_text, message.m_username, "Twitch");
