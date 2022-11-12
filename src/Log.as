@@ -5,13 +5,13 @@ void log_trace(const string&in input) {
 }
 
 void log_info(const string&in input) {
-    trace(input);
+    print(input);
 }
 
 void log_warn(const string&in input) {
-    trace(input);
+    warn(input);
 }
 
 void log_error(const string&in input) {
-    trace(input);
+    error(input);
 }
