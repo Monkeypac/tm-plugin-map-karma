@@ -75,7 +75,7 @@ void Render() {
     }
 
     if (Setting_ShowLastVote && g_karma !is null) {
-	g_karma.RenderShowLastVote();
+    	g_karma.RenderShowLastVote();
     }
 }
 
@@ -93,8 +93,11 @@ void RenderInterface() {
 void RenderMenu()
 {
     if (UI::BeginMenu("Game interface")) {
-	if (UI::MenuItem("Show MapKarma", "", Setting_ShowKarma)) {
+	if (UI::MenuItem("Show bar", "", Setting_ShowKarma)) {
 	    Setting_ShowKarma = !Setting_ShowKarma;
+	}
+	if (UI::MenuItem("Show last vote", "", Setting_ShowLastVote)) {
+	    Setting_ShowLastVote = !Setting_ShowLastVote;
 	}
 	UI::EndMenu();
     }

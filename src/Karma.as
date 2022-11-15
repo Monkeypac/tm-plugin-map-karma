@@ -126,14 +126,121 @@ namespace Karma {
 	    }
 	}
 
-	void RenderShowKarma() {
+	void RenderShowKarmaMainBox() {
 	    nvg::BeginPath();
-	    nvg::FontSize(30);
 
-	    string karmaValue = "MapKarma: " + this.GetScore();;
+	    vec2 top_left = Setting_ShowKarmaPosition;
+	    vec2 bot_right = vec2(top_left.x+Setting_ShowKarmaSize.x, top_left.y+Setting_ShowKarmaSize.y);
 
-	    nvg::Text(vec2(20, 50), karmaValue);
+	    nvg::RoundedRectVarying(
+		top_left, vec2(bot_right.x-top_left.x, bot_right.y-top_left.y),
+		Setting_ShowKarmaRadius.x, Setting_ShowKarmaRadius.y, Setting_ShowKarmaRadius.z, Setting_ShowKarmaRadius.w);
+
+	    nvg::FillColor(Setting_ShowKarmaBackgroundColor);
+	    nvg::Fill();
+
+	    nvg::StrokeColor(Setting_ShowKarmaBorderColor);
+	    nvg::Stroke();
+
 	    nvg::ClosePath();
+	}
+
+	string GetShowKarmaMore() {
+	    return Icons::Users + " " + this.m_votes.GetKeys().Length
+	    + "    "
+	    + Icons::Star + " " + this.GetScore();
+	}
+
+	void RenderShowKarmaBar() {
+	    int minus_y = 0;
+	    if (Setting_ShowKarmaShowMore) {
+		nvg::FontSize(Setting_ShowKarmaFontSize);
+		vec2 bounds = nvg::TextBounds(this.GetShowKarmaMore());
+
+		minus_y = int(bounds.y);
+	    }
+
+	    vec2 top_left = vec2(
+		Setting_ShowKarmaPosition.x
+		+ Setting_ShowKarmaMargin.x,
+		Setting_ShowKarmaPosition.y
+		+ Setting_ShowKarmaMargin.y
+	    );
+	    vec2 bot_right = vec2(top_left.x
+		+ Setting_ShowKarmaSize.x
+		- 2*Setting_ShowKarmaMargin.x,
+		top_left.y
+		+ Setting_ShowKarmaSize.y
+		- 2*Setting_ShowKarmaMargin.y
+		- minus_y
+	    );
+
+	    nvg::BeginPath();
+
+	    nvg::RoundedRectVarying(
+		top_left, vec2(bot_right.x-top_left.x, bot_right.y-top_left.y),
+		Setting_ShowKarmaBarRadius.x, Setting_ShowKarmaBarRadius.y, Setting_ShowKarmaBarRadius.z, Setting_ShowKarmaBarRadius.w);
+
+	    nvg::FillColor(Setting_ShowKarmaBarBackgroundColor);
+	    nvg::Fill();
+
+	    nvg::StrokeColor(Setting_ShowKarmaBarBorderColor);
+	    nvg::Stroke();
+
+	    nvg::ClosePath();
+
+	    uint length = this.m_votes.GetKeys().Length;
+	    if (length == 0) {
+		return;
+	    }
+
+	    float len_total = bot_right.x - top_left.x;
+	    float score = this.GetScore();
+	    float x_to_add = (score/100.0f)*len_total;
+	    vec2 karma_right = vec2(
+		top_left.x+x_to_add,
+		bot_right.y
+	    );
+
+	    nvg::BeginPath();
+
+	    nvg::RoundedRectVarying(
+		top_left, vec2(karma_right.x-top_left.x, karma_right.y-top_left.y),
+		Setting_ShowKarmaBarRadius.x, Setting_ShowKarmaBarRadius.y, Setting_ShowKarmaBarRadius.z, Setting_ShowKarmaBarRadius.w);
+
+	    nvg::FillColor(Setting_ShowKarmaBarColor);
+	    nvg::Fill();
+
+	    nvg::ClosePath();
+	}
+
+	void RenderShowKarmaShowMore() {
+	    if (!Setting_ShowKarmaShowMore) {
+		return;
+	    }
+
+	    nvg::BeginPath();
+
+	    nvg::FontSize(Setting_ShowKarmaFontSize);
+	    vec2 bounds = nvg::TextBounds(this.GetShowKarmaMore());
+
+	    vec2 text_pos = vec2(Setting_ShowKarmaPosition.x
+		+ Setting_ShowKarmaMargin.x,
+		Setting_ShowKarmaPosition.y
+		+ Setting_ShowKarmaSize.y
+		- Setting_ShowKarmaMargin.y/2
+	    );
+
+	    nvg::FillColor(Setting_ShowKarmaTextColor);
+	    nvg::Text(text_pos, this.GetShowKarmaMore());
+
+	    nvg::ClosePath();
+	}
+
+	void RenderShowKarma() {
+	    this.RenderShowKarmaMainBox();
+	    this.RenderShowKarmaBar();
+	    this.RenderShowKarmaShowMore();
 	}
 
 	void RenderShowLastVote() {
@@ -146,8 +253,10 @@ namespace Karma {
 
 	    string last_vote = m_last_votes[m_last_votes.Length - 1];
 
+	    nvg::FillColor(Setting_ShowLastVoteColor);
+
 	    nvg::TextAlign(nvg::Align::Left);
-	    nvg::TextBox(vec2(20, 100), 300, last_vote);
+	    nvg::TextBox(Setting_ShowLastVotePosition, 300, last_vote);
 	    nvg::ClosePath();
 	}
     }
