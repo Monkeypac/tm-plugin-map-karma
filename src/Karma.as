@@ -32,6 +32,11 @@ namespace Karma {
 
 	    string old_input;
 	    if (m_votes.Get(user_id, old_input)) {
+		if (old_input == input) {
+		    log_trace("Ignoring vote as it is unchanged");
+		    return;
+		}
+
 		VoteValue old_value = GetVoteValueFromString(old_input);
 		m_sum_votes -= old_value;
 	    }
@@ -47,7 +52,14 @@ namespace Karma {
 		nickname = nickname + " (" + source + ")";
 	    }
 	    m_nicknames.Set(user_id, nickname);
-	    m_last_votes.InsertLast(GetIconFromString(input) + nickname);
+	    addLastVote(GetIconFromString(input) + nickname);
+	}
+
+	void addLastVote(const string &in input) {
+	    m_last_votes.InsertLast(input);
+	    if (m_last_votes.Length > Setting_ShowLastVoteCount) {
+		m_last_votes.RemoveAt(0);
+	    }
 	}
 
 	void Load() {
@@ -250,13 +262,17 @@ namespace Karma {
 
 	    nvg::BeginPath();
 	    nvg::FontSize(15);
-
-	    string last_vote = m_last_votes[m_last_votes.Length - 1];
-
+	    vec2 bounds = nvg::TextBounds(this.GetShowKarmaMore());
 	    nvg::FillColor(Setting_ShowLastVoteColor);
 
-	    nvg::TextAlign(nvg::Align::Left);
-	    nvg::TextBox(Setting_ShowLastVotePosition, 300, last_vote);
+	    float shift_y = 0;
+
+	    for (uint i = 0; i < m_last_votes.Length; i++) {
+		string last_vote = m_last_votes[m_last_votes.Length - 1 - i];
+
+		nvg::Text(vec2(Setting_ShowLastVotePosition.x, Setting_ShowLastVotePosition.y+bounds.y+shift_y), last_vote);
+		shift_y += bounds.y;
+	    }
 	    nvg::ClosePath();
 	}
     }

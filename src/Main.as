@@ -88,6 +88,22 @@ void RenderInterface() {
 	    }
 	}
     }
+
+    if (Setting_ChangeKarmaPositions) {
+	UI::SetNextWindowSize(Setting_ShowKarmaSize.x, Setting_ShowKarmaSize.y);
+	UI::SetNextWindowPos(Setting_ShowKarmaPosition.x, Setting_ShowKarmaPosition.y);
+	if (UI::Begin("Karma bar - move and resize")) {
+	    Setting_ShowKarmaPosition = UI::GetWindowPos();
+	    Setting_ShowKarmaSize = UI::GetWindowSize();
+	    UI::End();
+	}
+
+	UI::SetNextWindowPos(Setting_ShowLastVotePosition.x, Setting_ShowLastVotePosition.y);
+	if (UI::Begin("Karma last vote - move")) {
+	    Setting_ShowLastVotePosition = UI::GetWindowPos();
+	    UI::End();
+	}
+    }
 }
 
 void RenderMenu()
