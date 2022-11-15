@@ -1,7 +1,7 @@
 [Setting hidden]
 bool Setting_ShowKarma = true;
 
-[Setting category="Bar" name="Change karma window"]
+[Setting category="Bar" name="Move karma windows"]
 bool Setting_ChangeKarmaPositions = false;
 
 [Setting category="Bar" name="Karma position" drag]
