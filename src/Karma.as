@@ -68,9 +68,9 @@ namespace Karma {
 	}
 
 	void loadLocal() {
-	    string saveFileURI = IO::FromStorageFolder(g_plugin.get_Version() + this.m_map.m_id);
+	    string saveFileURI = IO::FromStorageFolder(g_plugin.Version + this.m_map.m_id);
 	    if (!IO::FileExists(saveFileURI)) {
-		log_trace("No savefile for map " + this.m_map.m_name + " / " + this.m_map.m_id + " (version " + g_plugin.get_Version() + ")");
+		log_trace("No savefile for map " + this.m_map.m_name + " / " + this.m_map.m_id + " (version " + g_plugin.Version + ")");
 		return;
 	    }
 
@@ -94,7 +94,7 @@ namespace Karma {
 	}
 
 	void saveLocal() {
-	    string saveFileURI = IO::FromStorageFolder(g_plugin.get_Version() + this.m_map.m_id);
+	    string saveFileURI = IO::FromStorageFolder(g_plugin.Version + this.m_map.m_id);
 	    IO::File file(saveFileURI);
 	    file.Open(IO::FileMode::Write);
 	    log_trace("Saving map karma " + this.m_map.m_name + " / " + this.m_map.m_id);
