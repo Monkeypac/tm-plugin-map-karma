@@ -2,7 +2,7 @@
 name     = "MapKarma"
 author   = "Monkeypac"
 category = "Streaming"
-version  = "0.0.1"
+version  = "1.0.0"
 
 [script]
 optional_dependencies = [ "TwitchBase" ]
