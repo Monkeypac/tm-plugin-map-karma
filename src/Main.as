@@ -66,7 +66,17 @@ void OnMapUnset() {
 
 void OnDisabled() {
     log_trace("Disabling MapKarma plugin");
+    if (g_karma !is null) {
+	g_karma.Save();
+	@g_karma = null;
+    }
+#if DEPENDENCY_TWITCHBASE
     TwitchMod::OnDisabled();
+#endif
+}
+
+void OnDestroyed() {
+    OnDisabled();
 }
 
 void Render() {

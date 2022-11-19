@@ -1,3 +1,4 @@
+#if DEPENDENCY_TWITCHBASE
 namespace TwitchMod {
     int n_pluginId;
     string[] n_channels;
@@ -56,4 +57,4 @@ namespace TwitchMod {
 	n_pluginId = 0;
     }
 }
-
+#endif

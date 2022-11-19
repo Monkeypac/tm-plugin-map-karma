@@ -5,4 +5,4 @@ category = "Streaming"
 version  = "0.0.1"
 
 [script]
-dependencies = [ "TwitchBase" ]
+optional_dependencies = [ "TwitchBase" ]
