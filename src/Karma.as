@@ -261,7 +261,7 @@ namespace Karma {
 	    }
 
 	    nvg::BeginPath();
-	    nvg::FontSize(15);
+	    nvg::FontSize(Setting_ShowLastVoteFontSize);
 	    vec2 bounds = nvg::TextBounds(this.GetShowKarmaMore());
 	    nvg::FillColor(Setting_ShowLastVoteColor);
 
