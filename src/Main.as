@@ -1,6 +1,7 @@
 Map@ g_map;
 Karma::Round@ g_karma;
 Meta::Plugin@ g_plugin;
+Karma::TexturedBar@ g_textured_bar;
 
 void Main() {
     @g_plugin = Meta::ExecutingPlugin();
@@ -68,8 +69,8 @@ void OnDisabled() {
     log_trace("Disabling MapKarma plugin");
     if (g_karma !is null) {
 	g_karma.Save();
-	@g_karma = null;
     }
+
 #if DEPENDENCY_TWITCHBASE
     TwitchMod::OnDisabled();
 #endif
@@ -80,6 +81,10 @@ void OnDestroyed() {
 }
 
 void Render() {
+    if (g_textured_bar is null) {
+	@g_textured_bar = Karma::TexturedBar();
+    }
+
     if (Setting_ShowKarma && g_karma !is null) {
 	g_karma.RenderShowKarma();
     }

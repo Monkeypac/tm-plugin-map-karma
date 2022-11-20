@@ -249,9 +249,32 @@ namespace Karma {
 	    nvg::ClosePath();
 	}
 
+	void RenderShowKarmaTexture() {
+	    if (g_textured_bar is null || !g_textured_bar.m_is_on) {
+		return;
+	    }
+
+	    nvg::Texture@ texture = g_textured_bar.GetTexture(this.GetScore());
+	    if (texture is null) {
+		log_error("couldn't get texture for rendering map karma, please consider changing texture folder");
+		g_textured_bar.m_is_on = false;
+		return;
+	    }
+
+	    nvg::BeginPath();
+	    nvg::Rect(Setting_ShowKarmaPosition, Setting_ShowKarmaSize);
+	    nvg::FillPaint(nvg::TexturePattern(Setting_ShowKarmaPosition, Setting_ShowKarmaSize, 0.0f, texture, 1.0f));
+	    nvg::Fill();
+	    nvg::ClosePath();
+	}
+
 	void RenderShowKarma() {
-	    this.RenderShowKarmaMainBox();
-	    this.RenderShowKarmaBar();
+	    if (g_textured_bar is null || !g_textured_bar.m_is_on) {
+		this.RenderShowKarmaMainBox();
+		this.RenderShowKarmaBar();
+	    } else {
+		this.RenderShowKarmaTexture();
+	    }
 	    this.RenderShowKarmaShowMore();
 	}
 
