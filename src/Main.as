@@ -131,22 +131,32 @@ void RenderInterface() {
 
 void RenderMenu()
 {
-    if (UI::BeginMenu("Game interface")) {
-	if (UI::MenuItem("Show bar", "", Setting_ShowKarma)) {
-	    Setting_ShowKarma = !Setting_ShowKarma;
+    if (UI::BeginMenu("Map karma")) {
+	if (UI::BeginMenu("Game interface")) {
+	    if (UI::MenuItem("Show bar", "", Setting_ShowKarma)) {
+		Setting_ShowKarma = !Setting_ShowKarma;
+	    }
+	    if (UI::MenuItem("Show last vote", "", Setting_ShowLastVote)) {
+		Setting_ShowLastVote = !Setting_ShowLastVote;
+	    }
+	    UI::EndMenu();
 	}
-	if (UI::MenuItem("Show last vote", "", Setting_ShowLastVote)) {
-	    Setting_ShowLastVote = !Setting_ShowLastVote;
-	}
-	UI::EndMenu();
-    }
 
-    if (UI::BeginMenu("Openplanet interface")) {
-	if (UI::MenuItem("Show votes", "", Setting_VoteEntriesItf)) {
-	    Setting_VoteEntriesItf = !Setting_VoteEntriesItf;
+	if (UI::BeginMenu("Openplanet interface")) {
+	    if (UI::MenuItem("Show votes", "", Setting_VoteEntriesItf)) {
+		Setting_VoteEntriesItf = !Setting_VoteEntriesItf;
+	    }
+	    if (UI::MenuItem("Move and resize", "", Setting_ChangeKarmaPositions)) {
+		Setting_ChangeKarmaPositions = !Setting_ChangeKarmaPositions;
+	    }
+	    UI::EndMenu();
 	}
-	if (UI::MenuItem("Move and resize", "", Setting_ChangeKarmaPositions)) {
-	    Setting_ChangeKarmaPositions = !Setting_ChangeKarmaPositions;
+
+	if (UI::BeginMenu("Administrate")) {
+	    if (UI::MenuItem("Reload textures", "", false)) {
+		@g_textured_bar = null;
+	    }
+	    UI::EndMenu();
 	}
 	UI::EndMenu();
     }

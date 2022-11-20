@@ -43,7 +43,7 @@ int Setting_ShowKarmaFontSize = 20;
 [Setting category="Bar" name="Karma text color" color]
 vec4 Setting_ShowKarmaTextColor = vec4(3/255.0f, 6/255.0f, 36/255.0f, 1.0f);
 
-[Setting category="Bar" name="Custom textures - requires reload plugin" description="If this is non null and textures are successfully loaded, they will be used instead of the above settings"]
+[Setting category="Bar" name="Custom textures folder" description="If this is non null and textures are successfully loaded, they will be used instead of the above settings"]
 string Setting_ShowKarmaCustomTexturesDir = "";
 
 [Setting category="Details" name="Karma show details in bar" description="Note that setting this to true will ignore the details window position"]
