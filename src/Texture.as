@@ -18,13 +18,13 @@ namespace Karma {
 	    if (!folder_name.EndsWith("/")) {
 		folder_name += "/";
 	    }
-	    string folder = IO::FromStorageFolder(folder_name);
+	    string folder = IO::FromDataFolder(folder_name);
 	    if (!IO::FolderExists(folder)) {
 		log_warn("texturedbar: folder " + folder + " does not exist");
 		return;
 	    }
 
-	    string manifestURI = IO::FromStorageFolder(folder_name + "manifest.json");
+	    string manifestURI = IO::FromDataFolder(folder_name + "manifest.json");
 	    if (!IO::FileExists(manifestURI)) {
 		log_warn("texturedbar: manifest: not found " + manifestURI);
 		return;
@@ -69,7 +69,7 @@ namespace Karma {
 		    continue;
 		}
 
-		string textureURI = IO::FromStorageFolder(folder_name + string(textureKey));
+		string textureURI = IO::FromDataFolder(folder_name + string(textureKey));
 		if (!IO::FileExists(textureURI)) {
 		    log_warn("texturedbar: step: " + i + ": no file found " + textureURI);
 		    continue;
