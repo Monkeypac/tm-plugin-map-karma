@@ -165,7 +165,7 @@ namespace Karma {
 
 	void RenderShowKarmaBar() {
 	    int minus_y = 0;
-	    if (Setting_ShowKarmaShowMore) {
+	    if (Setting_ShowKarmaShowDetails && Setting_ShowKarmaShowDetailsInBar) {
 		nvg::FontSize(Setting_ShowKarmaFontSize);
 		vec2 bounds = nvg::TextBounds(this.GetShowKarmaMore());
 
@@ -226,24 +226,31 @@ namespace Karma {
 	    nvg::ClosePath();
 	}
 
-	void RenderShowKarmaShowMore() {
-	    if (!Setting_ShowKarmaShowMore) {
+	void RenderShowKarmaShowDetails() {
+	    if (!Setting_ShowKarmaShowDetails) {
 		return;
 	    }
 
 	    nvg::BeginPath();
 
-	    nvg::FontSize(Setting_ShowKarmaFontSize);
+	    nvg::FontSize(Setting_ShowKarmaDetailsFontSize);
 	    vec2 bounds = nvg::TextBounds(this.GetShowKarmaMore());
 
-	    vec2 text_pos = vec2(Setting_ShowKarmaPosition.x
-		+ Setting_ShowKarmaMargin.x,
-		Setting_ShowKarmaPosition.y
-		+ Setting_ShowKarmaSize.y
-		- Setting_ShowKarmaMargin.y/2
-	    );
+	    vec2 text_pos;
 
-	    nvg::FillColor(Setting_ShowKarmaTextColor);
+	    if (Setting_ShowKarmaShowDetailsInBar) {
+		text_pos = vec2(Setting_ShowKarmaPosition.x
+		    + Setting_ShowKarmaMargin.x,
+		    Setting_ShowKarmaPosition.y
+		    + Setting_ShowKarmaSize.y
+		    - Setting_ShowKarmaMargin.y/2
+		);
+	    } else {
+		text_pos = vec2(Setting_ShowKarmaDetailsPosition.x, Setting_ShowKarmaDetailsPosition.y+bounds.y);
+	    }
+
+	    nvg::FillColor(Setting_ShowKarmaDetailsTextColor);
+
 	    nvg::Text(text_pos, this.GetShowKarmaMore());
 
 	    nvg::ClosePath();
@@ -275,7 +282,7 @@ namespace Karma {
 	    } else {
 		this.RenderShowKarmaTexture();
 	    }
-	    this.RenderShowKarmaShowMore();
+	    this.RenderShowKarmaShowDetails();
 	}
 
 	void RenderShowLastVote() {

@@ -113,9 +113,17 @@ void RenderInterface() {
 	    UI::End();
 	}
 
+	UI::SetNextWindowSize(200, 200);
 	UI::SetNextWindowPos(int(Setting_ShowLastVotePosition.x), int(Setting_ShowLastVotePosition.y));
 	if (UI::Begin("Karma last vote - move")) {
 	    Setting_ShowLastVotePosition = UI::GetWindowPos();
+	    UI::End();
+	}
+
+	UI::SetNextWindowSize(200, 50);
+	UI::SetNextWindowPos(int(Setting_ShowKarmaDetailsPosition.x), int(Setting_ShowKarmaDetailsPosition.y));
+	if (UI::Begin("Karma details - move")) {
+	    Setting_ShowKarmaDetailsPosition = UI::GetWindowPos();
 	    UI::End();
 	}
     }
@@ -136,6 +144,9 @@ void RenderMenu()
     if (UI::BeginMenu("Openplanet interface")) {
 	if (UI::MenuItem("Show votes", "", Setting_VoteEntriesItf)) {
 	    Setting_VoteEntriesItf = !Setting_VoteEntriesItf;
+	}
+	if (UI::MenuItem("Move and resize", "", Setting_ChangeKarmaPositions)) {
+	    Setting_ChangeKarmaPositions = !Setting_ChangeKarmaPositions;
 	}
 	UI::EndMenu();
     }

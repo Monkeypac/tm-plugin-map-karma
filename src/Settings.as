@@ -1,8 +1,8 @@
 [Setting hidden]
 bool Setting_ShowKarma = true;
 
-[Setting category="Bar" name="Karma show more"]
-bool Setting_ShowKarmaShowMore = true;
+[Setting hidden]
+bool Setting_ShowKarmaShowDetails = true;
 
 [Setting category="Bar" name="Move karma windows"]
 bool Setting_ChangeKarmaPositions = false;
@@ -45,6 +45,18 @@ vec4 Setting_ShowKarmaTextColor = vec4(3/255.0f, 6/255.0f, 36/255.0f, 1.0f);
 
 [Setting category="Bar" name="Custom textures - requires reload plugin" description="If this is non null and textures are successfully loaded, they will be used instead of the above settings"]
 string Setting_ShowKarmaCustomTexturesDir = "";
+
+[Setting category="Details" name="Karma show details in bar" description="Note that setting this to true will ignore the details window position"]
+bool Setting_ShowKarmaShowDetailsInBar = false;
+
+[Setting category="Details" name="Karma details position" drag]
+vec2 Setting_ShowKarmaDetailsPosition = vec2(250, 50);
+
+[Setting category="Details" name="Karma details font size" drag]
+int Setting_ShowKarmaDetailsFontSize = 20;
+
+[Setting category="Details" name="Karma details text color" color]
+vec4 Setting_ShowKarmaDetailsTextColor = vec4(3/255.0f, 6/255.0f, 36/255.0f, 1.0f);
 
 [Setting hidden]
 bool Setting_ShowLastVote = false;
