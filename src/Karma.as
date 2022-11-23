@@ -6,6 +6,7 @@ namespace Karma {
 	int m_sum_votes;
 	Map m_map;
 	bool m_is_on;
+	string m_last_local_version = "0.0.1";
 
 	Round() {}
 
@@ -67,34 +68,31 @@ namespace Karma {
 	    m_is_on = true;
 	}
 
-	void loadLocal() {
-	    string saveFileURI = IO::FromStorageFolder(g_plugin.Version + this.m_map.m_id);
-	    if (!IO::FileExists(saveFileURI)) {
-		log_trace("No savefile for map " + this.m_map.m_name + " / " + this.m_map.m_id + " (version " + g_plugin.Version + ")");
-		return;
-	    }
-
-	    log_trace("Loading map karma " + this.m_map.m_name + " / " + this.m_map.m_id);
-	    IO::File file(saveFileURI);
-	    file.Open(IO::FileMode::Read);
-	    file.SetPos(0);
-	    while (!file.EOF()) {
-		string user_id = file.ReadLine();
-		string user_nickname = file.ReadLine();
-		string vote = file.ReadLine();
-		log_trace("Loaded " + user_id + "(" + user_nickname + ")" + " : " + vote);
-		addVote(user_id, vote, user_nickname, "");
-	    }
-	    file.Close();
-	}
-
 	void Save() {
 	    this.m_is_on = false;
 	    this.saveLocal();
 	}
 
+		// TODO when a new file format comes, handle backward compat, save new and erase previous
 	void saveLocal() {
-	    string saveFileURI = IO::FromStorageFolder(g_plugin.Version + this.m_map.m_id);
+	    saveLocal_0_0_1();
+	}
+
+	void loadLocal() {
+	    if (versionExists(this.m_last_local_version)) {
+		loadLocal_0_0_1();
+	    }
+	}
+
+	bool versionExists(const string &in version) {
+	    string saveFileURI = IO::FromStorageFolder(version + this.m_map.m_id);
+	    return IO::FileExists(saveFileURI);
+	}
+
+	void saveLocal_0_0_1() {
+	    string version = "0.0.1";
+
+	    string saveFileURI = IO::FromStorageFolder(version + this.m_map.m_id);
 	    IO::File file(saveFileURI);
 	    file.Open(IO::FileMode::Write);
 	    log_trace("Saving map karma " + this.m_map.m_name + " / " + this.m_map.m_id);
@@ -109,6 +107,29 @@ namespace Karma {
 		file.WriteLine(vote);
 	    }
 	    file.Flush();
+	    file.Close();
+	}
+
+	void loadLocal_0_0_1() {
+	    string version = "0.0.1";
+
+	    string saveFileURI = IO::FromStorageFolder(version + this.m_map.m_id);
+	    if (!IO::FileExists(saveFileURI)) {
+		log_trace("No savefile for map " + this.m_map.m_name + " / " + this.m_map.m_id + " (version " + version + ")");
+		return;
+	    }
+
+	    log_trace("Loading map karma " + this.m_map.m_name + " / " + this.m_map.m_id);
+	    IO::File file(saveFileURI);
+	    file.Open(IO::FileMode::Read);
+	    file.SetPos(0);
+	    while (!file.EOF()) {
+		string user_id = file.ReadLine();
+		string user_nickname = file.ReadLine();
+		string vote = file.ReadLine();
+		log_trace("Loaded " + user_id + "(" + user_nickname + ")" + " : " + vote);
+		addVote(user_id, vote, user_nickname, "");
+	    }
 	    file.Close();
 	}
 
