@@ -38,14 +38,14 @@ namespace Preset {
 	}
 
 	bool versionExists(const string &in version) {
-	    string saveFileURI = IO::FromDataFolder("MapKarmaPresets/" + version + this.m_name);
+	    string saveFileURI = IO::FromStorageFolder("Presets/" + version + this.m_name);
 	    return IO::FileExists(saveFileURI);
 	}
 
 	void saveLocal_0_0_1() {
 	    string version = "0.0.1";
 
-	    string folderPath = IO::FromDataFolder("MapKarmaPresets");
+	    string folderPath = IO::FromStorageFolder("Presets");
 	    IO::CreateFolder(folderPath);
 	    string saveFileURI = folderPath + "/" + version + this.m_name;
 	    log_trace("Saving preset " + this.m_name);
@@ -58,7 +58,7 @@ namespace Preset {
 	void loadLocal_0_0_1() {
 	    string version = "0.0.1";
 
-	    string saveFileURI = IO::FromDataFolder("MapKarmaPresets/" + version + this.m_name);
+	    string saveFileURI = IO::FromStorageFolder("Presets/" + version + this.m_name);
 	    if (!IO::FileExists(saveFileURI)) {
 	    	log_trace("No savefile for preset " + this.m_name + " (version " + version + ")");
 	    	return;
@@ -259,7 +259,7 @@ namespace Preset {
 
 	@defaultPreset = n_presets[0];
 
-	string userPresetsFolder = IO::FromDataFolder("MapKarmaPresets");
+	string userPresetsFolder = IO::FromStorageFolder("Presets");
 	auto files = IO::IndexFolder(userPresetsFolder, false);
 	for (uint i = 0; i < files.Length; i++) {
 	    string filename = files[i].SubStr(userPresetsFolder.Length + 1 + n_last_local_version.Length);

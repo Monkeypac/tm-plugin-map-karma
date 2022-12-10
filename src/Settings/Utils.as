@@ -87,7 +87,7 @@ string RenderSettingsIcon(const string &in label, const string &in value) {
 
 Preset::Preset@ RenderSettingsPresetsList(const string &in label, Preset::Preset@ input) {
     Preset::Preset@ output = input;
-    string userPresetsFolder = IO::FromDataFolder("Presets");
+    string userPresetsFolder = IO::FromStorageFolder("Presets");
 
     UI::TextWrapped(
 	"To use custom presets, place your presets here: " + userPresetsFolder
