@@ -28,7 +28,7 @@ void RenderSettingsGeneral() {
     RuntimeSetting_Preset = RenderSettingsPresetsList("Select preset", RuntimeSetting_Preset);
 }
 
-[SettingsTab name="Bar" icon="Cog"]
+[SettingsTab name="Bar" icon="Kenney::Rows"]
 void RenderSettingsKarmaBar() {
     UI::TextWrapped("Box settings");
     Setting_ShowKarmaPosition = UI::SliderFloat2("Box position", Setting_ShowKarmaPosition, 0, RuntimeSetting_MaxWindowSize);
@@ -48,7 +48,7 @@ void RenderSettingsKarmaBar() {
 }
 
 
-[SettingsTab name="Details" icon="Cog"]
+[SettingsTab name="Details" icon="Search"]
 void RenderSettingsDetails() {
     Setting_ShowKarmaShowDetails = UI::Checkbox("Show details", Setting_ShowKarmaShowDetails);
     Setting_ShowKarmaShowDetailsInBar = UI::Checkbox("Show details in bar", Setting_ShowKarmaShowDetailsInBar);
@@ -58,7 +58,7 @@ void RenderSettingsDetails() {
     Setting_ShowKarmaDetailsFont = RenderSettingsFontName("Details font", Setting_ShowKarmaDetailsFont);
 }
 
-[SettingsTab name="LastVote" icon="Cog"]
+[SettingsTab name="LastVote" icon="History"]
 void RenderSettingsLastVote() {
     Setting_ShowLastVote = UI::Checkbox("Show last vote", Setting_ShowLastVote);
     Setting_ShowLastVoteFontSize = UI::SliderInt("Last vote text size", Setting_ShowLastVoteFontSize, 0, Setting_MaxFontSize);
@@ -69,7 +69,7 @@ void RenderSettingsLastVote() {
 }
 
 
-[SettingsTab name="Icons" icon="Cog"]
+[SettingsTab name="Icons" icon="PaintBrush"]
 void RenderSettingsIcons() {
     Setting_IconMinusMinus = RenderSettingsIcon("Vote icon --", Setting_IconMinusMinus);
     Setting_IconMinus = RenderSettingsIcon("Vote icon -", Setting_IconMinus);
@@ -80,7 +80,7 @@ void RenderSettingsIcons() {
     Setting_IconScore = RenderSettingsIcon("Icon score", Setting_IconScore);
 }
 
-[SettingsTab name="Twitch" icon="Cog"]
+[SettingsTab name="Twitch" icon="Twitch"]
 void RenderSettingsTwitch() {
 #if DEPENDENCY_TWITCHBASE
     Setting_SendTwitchMessageOnMapChange = UI::Checkbox("Whether to send a message when votes are available for a map", Setting_SendTwitchMessageOnMapChange);
