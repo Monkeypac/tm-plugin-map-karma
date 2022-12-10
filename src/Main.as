@@ -2,10 +2,11 @@ Map@ g_map;
 Karma::Round@ g_karma;
 Meta::Plugin@ g_plugin;
 Karma::TexturedBar@ g_textured_bar;
+dictionary g_fonts;
 
 void Main() {
-    @g_plugin = Meta::ExecutingPlugin();
 #if TMNEXT
+    @g_plugin = Meta::ExecutingPlugin();
 #if DEPENDENCY_TWITCHBASE
     log_info("Twitch base installed, will attempt to use Twitch functionnalities.");
     startnew(TwitchMod::Main);
@@ -14,6 +15,8 @@ void Main() {
 #endif
 
     startnew(InGame::Main);
+
+    startnew(Preset::LoadPresetsFromRemote);
 
     while (true) {
 	UpdateMap();
@@ -82,11 +85,11 @@ void OnDestroyed() {
 
 void Render() {
     if (g_textured_bar is null) {
-	@g_textured_bar = Karma::TexturedBar();
+    	@g_textured_bar = Karma::TexturedBar();
     }
 
     if (Setting_ShowKarma && g_karma !is null) {
-	g_karma.RenderShowKarma();
+    	g_karma.RenderShowKarma();
     }
 
     if (Setting_ShowLastVote && g_karma !is null) {
@@ -160,4 +163,18 @@ void RenderMenu()
 	}
 	UI::EndMenu();
     }
+}
+
+void NvgLoadFont(const string &in path) {
+    int value;
+
+    if (g_fonts.Get(path, value)) {
+    	nvg::FontFace(value);
+    	return;
+    }
+
+    value = nvg::LoadFont(path, true, true);
+
+    g_fonts.Set(path, value);
+    NvgLoadFont(path);
 }

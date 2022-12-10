@@ -148,7 +148,7 @@ namespace Karma {
 
 	    string[]@ keys = this.m_votes.GetKeys();
 
-	    UI::Text(Icons::Users + keys.Length + Icons::Star + this.GetScore());
+	    UI::Text(Setting_IconNbVotants + keys.Length + Setting_IconScore + this.GetScore());
 
 	    for (uint i = 0; i < keys.Length; i++) {
 		string user_id = keys[i];
@@ -179,15 +179,16 @@ namespace Karma {
 	}
 
 	string GetShowKarmaMore() {
-	    return Icons::Users + " " + this.m_votes.GetKeys().Length
+	    return Setting_IconNbVotants + " " + this.m_votes.GetKeys().Length
 	    + "    "
-	    + Icons::Star + " " + this.GetScore();
+	    + Setting_IconScore + " " + this.GetScore();
 	}
 
 	void RenderShowKarmaBar() {
 	    int minus_y = 0;
 	    if (Setting_ShowKarmaShowDetails && Setting_ShowKarmaShowDetailsInBar) {
-		nvg::FontSize(Setting_ShowKarmaFontSize);
+		nvg::FontSize(Setting_ShowKarmaDetailsFontSize);
+		NvgLoadFont(Setting_ShowKarmaDetailsFont);
 		vec2 bounds = nvg::TextBounds(this.GetShowKarmaMore());
 
 		minus_y = int(bounds.y);
@@ -255,6 +256,7 @@ namespace Karma {
 	    nvg::BeginPath();
 
 	    nvg::FontSize(Setting_ShowKarmaDetailsFontSize);
+	    NvgLoadFont(Setting_ShowKarmaDetailsFont);
 	    vec2 bounds = nvg::TextBounds(this.GetShowKarmaMore());
 
 	    vec2 text_pos;
@@ -313,6 +315,7 @@ namespace Karma {
 
 	    nvg::BeginPath();
 	    nvg::FontSize(Setting_ShowLastVoteFontSize);
+	    NvgLoadFont(Setting_ShowLastVoteFont);
 	    vec2 bounds = nvg::TextBounds(this.GetShowKarmaMore());
 	    nvg::FillColor(Setting_ShowLastVoteColor);
 
@@ -357,17 +360,17 @@ namespace Karma {
 	VoteValue value = GetVoteValueFromString(input);
 	switch (value) {
 	    case MinusMinus:
-	    return Icons::MinusCircle + Icons::MinusCircle;
+	    return Setting_IconMinusMinus;
 	    case Minus:
-	    return Icons::MinusCircle;
+	    return Setting_IconMinus;
 	    case MinusPlus:
-	    return Icons::MinusCircle + Icons::PlusCircle;
+	    return Setting_IconMinusPlus;
 	    case Plus:
-	    return Icons::PlusCircle;
+	    return Setting_IconPlus;
 	    case PlusPlus:
-	    return Icons::PlusCircle + Icons::PlusCircle;
+	    return Setting_IconPlusPlus;
 	}
 
-	return Icons::TimesCircle + Icons::TimesCircle;
+	return "N/A";
     }
 }

@@ -33,7 +33,7 @@ namespace TwitchMod {
 	    return;
 	}
 	log_trace("Trying to send message to twitch channel " + n_currentChannel + " ==> " + msg);
-	Twitch::SendMessage(n_currentChannel, msg);
+	Twitch::SendMessage(n_currentChannel, StripFormatCodes(msg));
     }
 
     void onMessage(Twitch::Message@ message) {
