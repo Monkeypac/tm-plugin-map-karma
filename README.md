@@ -66,3 +66,11 @@ Note that you can put any number of ranges in there but putting too much might l
 Then go to Openplanet > Settings > MapKarma > Bar and in the "Custom textures folder" field, add in the name of the folder you created (here "MyTextures").
 
 Now you can just go to Scripts > Streaming > Map karma > Administrate > Reload textures and your textures should load.
+
+## Presets
+
+Presets are a way to load and save specific configurations. You can find those in the Preset section of the settings.
+
+A default preset exists with the default settings values.
+
+You can save your current settings to a new preset by entering a name in the box and then clicking on the Save button.
